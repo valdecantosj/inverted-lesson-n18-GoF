@@ -2,90 +2,81 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Patrones GoF — Fichas de estudio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700..900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Aplica el tema elegido ANTES de pintar la página, para evitar un parpadeo
+    // de colores. Es lo único que no puede esperar a script.js (que va con defer).
+    try { const t = localStorage.getItem('gof-tema'); if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="wrap">
+  <main class="wrap">
     <div class="top">
       <span class="brand">DSI · Cátedra de Diseño · Clase 18</span>
+      <button class="theme-toggle" type="button" aria-label="Cambiar tema"><span aria-hidden="true">◐</span></button>
     </div>
 
     <header class="hero">
       <h1>Seis patrones, un problema cada uno</h1>
-      <p>Cada ficha empieza por el problema, después muestra la solución y termina con preguntas para que compruebes lo aprendido.</p>
+      <p>Cada ficha empieza por el problema, después muestra la solución y termina con una pregunta para que compruebes lo aprendido.</p>
     </header>
 
     <p class="hint">Tip: en las fichas, tocá las palabras con subrayado punteado para ver su definición.</p>
+    <p class="progress" aria-live="polite">0 de 6 fichas completadas</p>
 
     <ul class="list">
-      <!-- 1. Adapter -->
       <li>
-        <a href="ficha-adapter.html" class="item" style="--accent: var(--structural)">
-          <div class="item-head">
-            <h2>Adaptador (Adapter)</h2>
-            <span class="tag">Estructural</span>
-          </div>
+        <a class="item cat-structural" href="ficha-adapter.html" data-id="adapter">
+          <h2>Adaptador (Adapter)<span class="tag">Estructural</span></h2>
           <p class="q">¿Cómo resolver interfaces incompatibles?</p>
+          <span class="done" hidden>✓ Completada</span>
         </a>
       </li>
-
-      <!-- 2. Factory -->
       <li>
-        <a href="ficha-factory.html" class="item" style="--accent: var(--creational)">
-          <div class="item-head">
-            <h2>Factoría (Factory)</h2>
-            <span class="tag">Creacional</span>
-          </div>
+        <a class="item cat-creational" href="ficha-factory.html" data-id="factory">
+          <h2>Factoría (Factory)<span class="tag">Creacional</span></h2>
           <p class="q">¿Quién debe crear los objetos cuando la creación es compleja?</p>
+          <span class="done" hidden>✓ Completada</span>
         </a>
       </li>
-
-      <!-- 3. Singleton -->
       <li>
-        <a href="ficha-singleton.html" class="item" style="--accent: var(--creational)">
-          <div class="item-head">
-            <h2>Singleton</h2>
-            <span class="tag">Creacional</span>
-          </div>
+        <a class="item cat-creational" href="ficha-singleton.html" data-id="singleton">
+          <h2>Singleton<span class="tag">Creacional</span></h2>
           <p class="q">¿Cómo garantizo una única instancia con acceso global?</p>
+          <span class="done" hidden>✓ Completada</span>
         </a>
       </li>
-
-      <!-- 4. Facade -->
       <li>
-        <a href="ficha-facade.html" class="item" style="--accent: var(--structural)">
-          <div class="item-head">
-            <h2>Fachada (Facade)</h2>
-            <span class="tag">Estructural</span>
-          </div>
+        <a class="item cat-structural" href="ficha-facade.html" data-id="facade">
+          <h2>Fachada (Facade)<span class="tag">Estructural</span></h2>
           <p class="q">¿Cómo ofrecer una interfaz unificada a un subsistema?</p>
+          <span class="done" hidden>✓ Completada</span>
         </a>
       </li>
-
-      <!-- 5. Strategy -->
       <li>
-        <a href="ficha-strategy.html" class="item" style="--accent: var(--behavioral)">
-          <div class="item-head">
-            <h2>Estrategia (Strategy)</h2>
-            <span class="tag">Comportamiento</span>
-          </div>
+        <a class="item cat-behavioral" href="ficha-strategy.html" data-id="strategy">
+          <h2>Estrategia (Strategy)<span class="tag">Comportamiento</span></h2>
           <p class="q">¿Cómo diseñar algoritmos o políticas que puedan cambiar?</p>
+          <span class="done" hidden>✓ Completada</span>
         </a>
       </li>
-
-      <!-- 6. Composite -->
       <li>
-        <a href="ficha-composite.html" class="item" style="--accent: var(--structural)">
-          <div class="item-head">
-            <h2>Composite</h2>
-            <span class="tag">Estructural</span>
-          </div>
+        <a class="item cat-structural" href="ficha-composite.html" data-id="composite">
+          <h2>Composite<span class="tag">Estructural</span></h2>
           <p class="q">¿Cómo tratar igual a un grupo y a un objeto atómico?</p>
+          <span class="done" hidden>✓ Completada</span>
         </a>
       </li>
     </ul>
-  </div>
+  </main>
+
+  <!-- Popover de conceptos (lo maneja script.js) -->
+  <div id="pop" role="dialog" aria-live="polite" hidden></div>
 </body>
 </html>

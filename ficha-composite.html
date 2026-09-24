@@ -2,18 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Composite — Ficha Técnica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Composite — Patrones GoF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700..900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Aplica el tema elegido ANTES de pintar la página, para evitar un parpadeo
+    // de colores. Es lo único que no puede esperar a script.js (que va con defer).
+    try { const t = localStorage.getItem('gof-tema'); if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="script.js" defer></script>
 </head>
-<body>
-  <div class="wrap">
+<body data-ficha="composite">
+  <main class="wrap">
     <div class="top">
-      <a href="index.html" class="back">← Volver al índice</a>
-      <span class="brand">6 de 6</span>
+      <a class="back" href="index.html">← Volver al índice</a>
+      <div class="top-right">
+        <span class="brand">6 de 6</span>
+        <button class="theme-toggle" type="button" aria-label="Cambiar tema"><span aria-hidden="true">◐</span></button>
+      </div>
     </div>
 
-    <div style="--accent: var(--structural)">
+    <article class="cat-structural">
       <header class="head">
         <span class="tag">Estructural</span>
         <h1>Composite</h1>
@@ -22,59 +34,69 @@
 
       <section class="step bad">
         <h3>Contexto / Problema</h3>
-        <p>¿Cómo tratar un grupo o una estructura compuesta del mismo modo (polimórficamente) que a un objeto no compuesto (atómico)? El problema aparece cuando tenemos objetos que pueden existir individualmente y objetos formados por otros objetos del mismo tipo.</p>
+        <p>¿Cómo tratar un grupo o una estructura compuesta del mismo modo (polimórficamente) que un objeto no compuesto (atómico)?</p>
       </section>
 
       <section class="step good">
         <h3>Solución</h3>
-        <p>Defina las clases para los objetos compuestos y atómicos de manera que implementen la misma <button class="term" data-k="interfaz">interfaz</button>:</p>
-        <ul>
-          <li>El <button class="term" data-k="comp">compuesto</button> contiene una lista de objetos que la implementan y delega en ellos por <button class="term" data-k="rec">recursión</button>.</li>
-          <li>Las <button class="term" data-k="hoja">hojas</button> hacen el trabajo directo sin ramificaciones.</li>
-          <li>Permite construir estructuras jerárquicas en árbol y tratarlas de manera uniforme.</li>
-        </ul>
+        <p>Defina las clases para los objetos compuestos y atómicos de manera que implementen el mismo interfaz. El <button class="term" data-k="comp">compuesto</button> contiene una lista de objetos que la implementan y delega en ellos por <button class="term" data-k="rec">recursión</button>; las <button class="term" data-k="hoja">hojas</button> hacen el trabajo.</p>
       </section>
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <ul>
-          <li><strong>NuevaEra (Larman):</strong> Pueden coexistir varias políticas de precio contradictorias. <code>EstrategiaCompuestaFijarPrecios</code> implementa <code>IEstrategiaFijarPreciosVenta</code> y contiene otras estrategias (<code>LoMejorParaElCliente</code> devuelve el menor total). La <code>Venta</code> no sabe si su estrategia es atómica o compuesta.</li>
-          <li><strong>En la clase (Pedidos):</strong> <code>PromocionSimple</code> (20% de descuento) y <code>PromocionCompuesta</code> (Black Friday: 20% descuento + envío gratis) bajo la interfaz común <code>Promocion</code>.</li>
-        </ul>
+        <p>En NuevaEra pueden coexistir varias políticas de precio contradictorias. EstrategiaCompuestaFijarPrecios implementa IEstrategiaFijarPreciosVenta y contiene otras estrategias (LoMejorParaElCliente devuelve el menor total). La Venta no sabe si su estrategia es atómica o compuesta. En la clase: PromocionSimple y PromocionCompuesta.</p>
       </section>
 
       <section class="step">
         <h3>Representación en UML</h3>
-        <div class="uml">
+        <div class="uml" role="img" aria-label="Diagrama de clases UML de Composite">
           <svg viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1L11 6L1 11Z" class="box"/></marker>
-              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1L11 6L1 11" class="ln"/></marker>
+              <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto">
+                <path d="M1 1L11 6L1 11Z" class="box"/>
+              </marker>
+              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+                <path d="M1 1L11 6L1 11" class="ln"/>
+              </marker>
+              <marker id="dia" viewBox="0 0 14 10" refX="1" refY="5" markerWidth="14" markerHeight="10" orient="auto">
+                <path d="M1 5L7 1L13 5L7 9Z" class="box"/>
+              </marker>
             </defs>
-            <rect class="box" x="20" y="38" width="100" height="24"/><text class="t" x="70" y="54" text-anchor="middle">Client</text>
-            <rect class="box" x="230" y="20" width="210" height="48"/><text x="335" y="36" text-anchor="middle">«interface»</text><text class="t" x="335" y="50" text-anchor="middle">Component</text><line class="ln" x1="230" x2="440" y1="56" y2="56"/><text x="238" y="65">+ execute()</text>
-            <rect class="box" x="60" y="170" width="140" height="39"/><text class="t" x="130" y="186" text-anchor="middle">Leaf</text><line class="ln" x1="60" x2="200" y1="192" y2="192"/><text x="68" y="202">+ execute()</text>
-            <rect class="box" x="300" y="150" width="300" height="69"/><text class="t" x="450" y="166" text-anchor="middle">Composite</text><line class="ln" x1="300" x2="600" y1="172" y2="172"/><text x="308" y="184">- children: List&lt;Component&gt;</text><text x="308" y="199">+ add(c: Component)</text><text x="308" y="214">+ execute()</text>
-            <line class="ln" x1="120" y1="50" x2="230" y2="50" marker-end="url(#arr)"/>
-            <line class="ln" x1="130" y1="170" x2="335" y2="68" stroke-dasharray="6 4" marker-end="url(#tri)"/>
-            <line class="ln" x1="450" y1="150" x2="335" y2="68" stroke-dasharray="6 4" marker-end="url(#tri)"/>
+            <rect class="box" x="20" y="38" width="100" height="24"/>
+            <text class="t" x="70" y="54" text-anchor="middle" style="font-size:13px">Client</text>
+            <line class="ln" x1="20" x2="120" y1="60" y2="60"/>
+            <rect class="box" x="230" y="20" width="210" height="61"/>
+            <text x="335" y="36" text-anchor="middle">«interface»</text>
+            <text class="t" x="335" y="50" text-anchor="middle" style="font-size:13px">Component</text>
+            <line class="ln" x1="230" x2="440" y1="56" y2="56"/>
+            <text x="238" y="72">+ execute()</text>
+            <rect class="box" x="60" y="170" width="140" height="47"/>
+            <text class="t" x="130" y="186" text-anchor="middle" style="font-size:13px">Leaf</text>
+            <line class="ln" x1="60" x2="200" y1="192" y2="192"/>
+            <text x="68" y="208">+ execute()</text>
+            <rect class="box" x="300" y="150" width="300" height="92"/>
+            <text class="t" x="450" y="166" text-anchor="middle" style="font-size:13px">Composite</text>
+            <line class="ln" x1="300" x2="600" y1="172" y2="172"/>
+            <text x="308" y="188">- children: List&lt;Component&gt;</text>
+            <text x="308" y="203">+ add(c: Component)</text>
+            <text x="308" y="218">+ remove(c: Component)</text>
+            <text x="308" y="233">+ execute()</text>
+            <line class="ln" x1="120" y1="50" x2="230" y2="50.5" marker-end="url(#arr)"/>
+            <line class="ln" x1="130" y1="170" x2="335" y2="81" stroke-dasharray="6 4" marker-end="url(#tri)"/>
+            <line class="ln" x1="450" y1="150" x2="335" y2="81" stroke-dasharray="6 4" marker-end="url(#tri)"/>
           </svg>
         </div>
         <ul class="legend">
-          <li><b>Component «interface»:</b> define la operación común (execute) para individuos y grupos.</li>
-          <li><b>Leaf:</b> objeto atómico que implementa Component y hace el trabajo.</li>
-          <li><b>Composite:</b> implementa Component y además guarda children, que pueden ser Leaf u otros Composite; les delega la operación.</li>
-          <li><b>Client:</b> trabaja con Component sin distinguir Leaf de Composite.</li>
+          <li><b>Component</b> «interface»: define la operación común (execute) para individuos y grupos.</li>
+          <li><b>Leaf</b>: objeto atómico que implementa Component y hace el trabajo.</li>
+          <li><b>Composite</b>: implementa Component y además guarda children, que pueden ser Leaf u otros Composite; les delega la operación.</li>
+          <li><b>Client</b>: trabaja con Component sin distinguir Leaf de Composite.</li>
         </ul>
       </section>
 
       <section class="step">
         <h3>Discusión</h3>
-        <ul>
-          <li><strong>Beneficios:</strong> El <button class="term" data-k="cliente">cliente</button> no distingue atómico de compuesto, se representan jerarquías y el compuesto delega en sus componentes.</li>
-          <li><strong>Costo:</strong> Más clases y relaciones; la interfaz común puede quedar demasiado general si hay operaciones sin sentido para todos (como <code>add()</code> en las hojas).</li>
-          <li><strong>Aplicabilidad:</strong> Sirve para múltiples tipos de componentes jerárquicos (por ejemplo, macro commands o árboles de interfaz).</li>
-        </ul>
+        <p>Beneficios: el cliente no distingue atómico de compuesto, se representan jerarquías y el compuesto delega en sus componentes. Costo: más clases y relaciones; la interfaz común puede quedar demasiado general si hay operaciones sin sentido para todos. Sirve para otros objetos, no solo estrategias (por ejemplo, macro commands).</p>
       </section>
 
       <section class="step">
@@ -84,55 +106,52 @@
 
       <section class="step">
         <h3>Ponete a prueba</h3>
-        <div class="qq">
+        <p class="fb" id="sc" aria-live="polite">0 de 4 respondidas</p>
+        <div class="qq" data-answer="0" data-explain="Es su Contexto/Problema.">
           <p><b>1.</b> ¿Qué problema resuelve el Composite según Larman?</p>
           <div class="opts">
-            <button class="opt" data-correct="true" data-fb="Es su Contexto/Problema formal.">Cómo tratar un grupo del mismo modo (polimórfico) que un objeto atómico</button>
-            <button class="opt" data-correct="false">Cómo crear objetos complejos</button>
-            <button class="opt" data-correct="false">Cómo ocultar un subsistema</button>
+            <button class="opt">Cómo tratar un grupo del mismo modo (polimórfico) que un objeto atómico</button>
+            <button class="opt">Cómo crear objetos complejos</button>
+            <button class="opt">Cómo ocultar un subsistema</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
-
-        <div class="qq">
+        <div class="qq" data-answer="2" data-explain="Externos e internos implementan la misma interfaz.">
           <p><b>2.</b> ¿Qué característica distingue al objeto compuesto?</p>
           <div class="opts">
-            <button class="opt" data-correct="false">No implementa ninguna interfaz</button>
-            <button class="opt" data-correct="false">Solo tiene métodos estáticos</button>
-            <button class="opt" data-correct="true" data-fb="Externos e internos implementan la misma interfaz común.">Contiene una lista de objetos y él mismo implementa la misma interfaz</button>
+            <button class="opt">No implementa ninguna interfaz</button>
+            <button class="opt">Solo tiene métodos estáticos</button>
+            <button class="opt">Contiene una lista de objetos y él mismo implementa la misma interfaz</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
-
-        <div class="qq">
+        <div class="qq" data-answer="0" data-explain="Y proporciona Variaciones Protegidas a los clientes.">
           <p><b>3.</b> ¿En qué se basa el Composite?</p>
           <div class="opts">
-            <button class="opt" data-correct="true" data-fb="Y proporciona Variaciones Protegidas a los clientes.">En el Polimorfismo</button>
-            <button class="opt" data-correct="false">En el Experto</button>
-            <button class="opt" data-correct="false">En el Controlador</button>
+            <button class="opt">En el Polimorfismo</button>
+            <button class="opt">En el Experto</button>
+            <button class="opt">En el Controlador</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
-
-        <div class="qq">
+        <div class="qq" data-answer="1" data-explain="Larman lo aplica sobre una familia de Estrategias.">
           <p><b>4.</b> ¿Con qué patrones se usa normalmente el Composite?</p>
           <div class="opts">
-            <button class="opt" data-correct="false">Singleton y Factoría</button>
-            <button class="opt" data-correct="true" data-fb="Larman lo aplica habitualmente sobre una familia de Estrategias.">Estrategia y Command</button>
-            <button class="opt" data-correct="false">Adapter y Proxy</button>
+            <button class="opt">Singleton y Factoría</button>
+            <button class="opt">Estrategia y Command</button>
+            <button class="opt">Adapter y Proxy</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
       </section>
 
-      <div class="nav-links">
+      <nav class="nav">
         <a href="ficha-strategy.html">← Estrategia</a>
-        <a href="index.html">Volver al inicio ↑</a>
-      </div>
-    </div>
-  </div>
+      </nav>
+    </article>
+  </main>
 
-  <div id="pop" role="dialog" hidden></div>
-  <script src="script.js"></script>
+  <!-- Popover de conceptos (lo maneja script.js) -->
+  <div id="pop" role="dialog" aria-live="polite" hidden></div>
 </body>
 </html>

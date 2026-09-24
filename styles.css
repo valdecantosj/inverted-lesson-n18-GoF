@@ -1,32 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700..900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap');
+/* ==========================================================================
+   Patrones GoF — Fichas de estudio
+   Hoja de estilos compartida por index.html y todas las ficha-*.html
+   ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. Tokens de diseño
+   Tema claro "Warm Paper / Lino suave" por defecto. El oscuro se activa por
+   preferencia del sistema o eligiéndolo con el botón (data-theme en <html>).
+   -------------------------------------------------------------------------- */
 :root {
+  /* Tipografías */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Merriweather', Georgia, serif;
   --font-code: 'JetBrains Mono', monospace;
 
-  /* Colores exactos de la captura original (Modo Claro) */
-  --bg-canvas: #eae6df;
-  --bg-card: #f5f2eb;
-  --bg-inset: #dfdad0;
-  --text-primary: #212529;
-  --text-secondary: #5a626a;
-  --border-subtle: #d3ccc0;
+  /* Superficies y texto (modo claro) */
+  --bg-canvas: #eae6df;      /* arena / lino desaturado */
+  --bg-card: #f5f2eb;        /* pergamino claro */
+  --bg-inset: #dfdad0;       /* insets / fondos secundarios */
+  --text-primary: #212529;   /* grafito oscuro, no negro puro */
+  --text-secondary: #5a626a; /* gris medio desaturado */
+  --border-subtle: #d3ccc0;  /* bordes sutiles */
 
+  /* Colores por categoría de patrón */
   --structural: #3d6889;
   --creational: #4d7c5f;
   --behavioral: #ab5e3f;
   --warning: #9e3d38;
 
+  /* Tintes y código */
   --tint-warn: #f7e8e7;
   --tint-ok: #e4efe7;
   --code-bg: #25282d;
   --code-fg: #ebe7e0;
-  --shadow: 0 4px 12px rgba(45, 38, 30, 0.07);
+  --shadow: 0 4px 12px rgba(45, 38, 30, .07);
+
+  /* Áreas seguras en móviles */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* Tema oscuro: por preferencia del sistema (salvo que se fuerce claro) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg-canvas: #1c1a17;
     --bg-card: #26231f;
     --bg-inset: #33302a;
@@ -44,59 +61,172 @@
   }
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* Tema oscuro forzado */
+:root[data-theme="dark"] {
+  --bg-canvas: #1c1a17;
+  --bg-card: #26231f;
+  --bg-inset: #33302a;
+  --text-primary: #ece8e0;
+  --text-secondary: #a9a89f;
+  --border-subtle: #403c34;
+  --structural: #7fb0d3;
+  --creational: #88c09b;
+  --behavioral: #e0906f;
+  --warning: #e58c86;
+  --tint-warn: #3a2523;
+  --tint-ok: #22302a;
+  --code-bg: #141311;
+  --shadow: none;
+}
+
+/* Acento según categoría (reemplaza los style="--accent:..." inline) */
+.cat-structural { --accent: var(--structural); }
+.cat-creational { --accent: var(--creational); }
+.cat-behavioral { --accent: var(--behavioral); }
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  min-height: 100vh;
+  min-height: 100%;
   background: var(--bg-canvas);
   color: var(--text-primary);
   font: 400 16px/1.75 var(--font-body);
   padding: 1.5rem 1rem 4rem;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent, var(--structural));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Barra superior (común a todas las páginas)
+   -------------------------------------------------------------------------- */
+.top {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  min-height: 44px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: .6rem .2rem;
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--text-secondary);
+  min-height: 44px;
+}
+
+.back:hover {
+  color: var(--text-primary);
+}
+
+.brand {
+  font-size: .85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Selector de tema claro / oscuro */
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: border-color .15s, color .15s;
 }
 
-.wrap { width: 100%; max-width: 720px; margin: 0 auto; }
-
-h1, h2, h3 { 
-  font-family: var(--font-display); 
-  font-weight: 800; 
-  line-height: 1.15; 
-  letter-spacing: -0.01em; 
+.theme-toggle:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
-.top { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 2rem; 
-  min-height: 44px; 
+/* --------------------------------------------------------------------------
+   4. Índice (index.html)
+   -------------------------------------------------------------------------- */
+.hero h1 {
+  font-size: clamp(2.1rem, 7vw, 3.1rem);
+  margin-bottom: .7rem;
 }
 
-.back { 
-  text-decoration: none; 
-  padding: 0.6rem 0.2rem; 
-  font-weight: 700; 
-  font-size: 0.9rem; 
-  color: var(--text-secondary); 
+.hero p {
+  color: var(--text-secondary);
+  max-width: 52ch;
 }
-.back:hover { color: var(--text-primary); }
-.brand { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; }
 
-/* Header e Índice */
-.hero h1 { font-size: clamp(2.1rem, 7vw, 3.1rem); margin-bottom: 0.7rem; }
-.hero p { color: var(--text-secondary); max-width: 52ch; }
-.hint { margin: 1.2rem 0 2rem; padding: 0.8rem 1rem; background: var(--bg-inset); border-radius: 8px; font-size: 0.88rem; }
-.list { display: grid; gap: 0.9rem; list-style: none; }
+.hint {
+  margin: 1.2rem 0 2rem;
+  padding: .8rem 1rem;
+  background: var(--bg-inset);
+  border-radius: 8px;
+  font-size: .88rem;
+}
 
-/* Tarjetas del menú - Eliminación total y forzada del subrayado */
-a.item, 
-a.item *, 
-a.item:hover, 
-a.item:visited, 
-a.item:active, 
-a.item:focus {
-  text-decoration: none !important;
+.progress {
+  margin: 0 0 1.5rem;
+  font-size: .85rem;
+  color: var(--text-secondary);
+}
+
+.list {
+  display: grid;
+  gap: .9rem;
+  list-style: none;
 }
 
 .item {
@@ -109,132 +239,361 @@ a.item:focus {
   border-radius: 12px;
   padding: 1.2rem 1.3rem;
   box-shadow: var(--shadow);
-  transition: transform 0.15s ease;
-  cursor: pointer;
+  transition: transform .15s;
 }
 
-.item:hover { transform: translateX(4px); }
+.item:hover {
+  transform: translateX(4px);
+}
 
-.item-head {
+.item h2 {
+  font-size: 1.4rem;
   display: flex;
   justify-content: space-between;
+  gap: .5rem;
   align-items: baseline;
-  gap: 0.5rem;
 }
 
-.item h2 { 
-  font-size: 1.4rem; 
-  color: var(--text-primary); 
+.item .q {
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: .92rem;
+  margin: .35rem 0 .6rem;
 }
 
-.item .q { 
-  font-style: italic; 
-  color: var(--text-secondary); 
-  font-size: 0.92rem; 
-  margin: 0.35rem 0 0.6rem; 
+.tag {
+  font: 700 .72rem var(--font-body);
+  padding: .2rem .6rem;
+  border-radius: 6px;
+  background: var(--bg-inset);
+  color: var(--accent);
+  white-space: nowrap;
 }
 
-.tag { 
-  font: 700 0.72rem var(--font-body); 
-  padding: 0.2rem 0.6rem; 
-  border-radius: 6px; 
-  background: var(--bg-inset); 
-  color: var(--accent); 
-  white-space: nowrap; 
+.done {
+  color: var(--creational);
+  font-size: .8rem;
+  font-weight: 700;
 }
 
-/* Fichas individuales */
-.head { border-left: 8px solid var(--accent); padding-left: 1rem; margin-bottom: 1.6rem; }
-.head h1 { font-size: clamp(2rem, 7vw, 2.8rem); margin-top: 0.5rem; }
-.analogy { margin-top: 0.6rem; font-style: italic; color: var(--text-secondary); }
-
-.step { 
-  background: var(--bg-card); 
-  border: 1px solid var(--border-subtle); 
-  border-radius: 12px; 
-  padding: 1.4rem; 
-  margin-bottom: 1.1rem; 
-  box-shadow: var(--shadow); 
+.done[hidden] {
+  display: none;
 }
-.step h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent); }
-.step p + p, .step p + ul { margin-top: 0.7rem; }
-.step ul { padding-left: 1.25rem; margin-top: 0.5rem; }
-.step li { margin-bottom: 0.45rem; font-size: 0.92rem; }
 
-.bad { background: var(--tint-warn); border-left: 5px solid var(--warning); }
-.bad h3 { color: var(--warning); }
-.good { background: var(--tint-ok); border-left: 5px solid var(--creational); }
-.good h3 { color: var(--creational); }
-
-/* Subrayado punteado en conceptos */
-.term { 
-  background: none; 
-  border: 0; 
-  border-bottom: 2px dotted var(--accent); 
-  font-weight: 700; 
-  padding: 0 1px; 
-  color: var(--text-primary); 
-  cursor: pointer; 
+/* --------------------------------------------------------------------------
+   5. Ficha (ficha-*.html)
+   -------------------------------------------------------------------------- */
+.head {
+  border-left: 8px solid var(--accent);
+  padding-left: 1rem;
+  margin-bottom: 1.6rem;
 }
-.term:hover { background: var(--bg-inset); }
+
+.head h1 {
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  margin-top: .5rem;
+}
+
+.analogy {
+  margin-top: .6rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.step {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.4rem;
+  margin-bottom: 1.1rem;
+  box-shadow: var(--shadow);
+}
+
+.step h3 {
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+  color: var(--accent);
+}
+
+.step p + p,
+.step p + ul {
+  margin-top: .7rem;
+}
+
+.step ul {
+  padding-left: 1.2rem;
+}
+
+.bad {
+  background: var(--tint-warn);
+  border-left: 4px solid var(--warning);
+}
+
+.bad h3 {
+  color: var(--warning);
+}
+
+.good {
+  background: var(--tint-ok);
+  border-left: 4px solid var(--creational);
+}
+
+.good h3 {
+  color: var(--creational);
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 1rem;
+  border-radius: 8px;
+  font: 400 .82rem/1.55 var(--font-code);
+  overflow-x: auto;
+  margin-top: .8rem;
+}
+
+/* Utilidades de diagramas de flujo y columnas (reservadas para ampliar) */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem;
+  margin-top: .9rem;
+  font-size: .85rem;
+}
+
+.node {
+  padding: .35rem .7rem;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background: var(--bg-card);
+  font-weight: 700;
+}
+
+.node.core {
+  background: var(--accent);
+  color: var(--bg-card);
+}
+
+.arrow {
+  color: var(--text-secondary);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.cols .step {
+  margin: 0 0 1.1rem;
+}
+
+@media (max-width: 560px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lbl {
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   6. Conceptos del glosario y popover
+   -------------------------------------------------------------------------- */
+.term {
+  background: none;
+  border: 0;
+  border-bottom: 2px dotted var(--accent);
+  font-weight: 700;
+  padding: 0 1px;
+  color: var(--text-primary);
+}
+
+.term:hover,
+.term[aria-expanded="true"] {
+  background: var(--bg-inset);
+}
 
 #pop {
-  position: fixed; 
-  z-index: 20; 
+  position: fixed;
+  z-index: 20;
   width: min(320px, calc(100vw - 2rem));
-  background: var(--bg-card); 
+  background: var(--bg-card);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle); 
+  border: 1px solid var(--border-subtle);
   border-top: 5px solid var(--accent);
-  border-radius: 12px; 
-  padding: 1rem 1.1rem; 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  font-size: 0.88rem; 
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+  font-size: .88rem;
   line-height: 1.6;
 }
-#pop[hidden] { display: none; }
-#pop b { display: block; font: 800 1.05rem var(--font-display); margin-bottom: 0.25rem; }
-#pop small { display: block; margin-top: 0.5rem; color: var(--text-secondary); font-style: italic; }
-#pop .x { position: absolute; top: 0.2rem; right: 0.3rem; background: none; border: 0; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; }
 
-/* UML renderizado */
-.uml { overflow-x: auto; margin-top: 0.8rem; background: var(--bg-inset); border-radius: 8px; padding: 0.5rem; }
-.uml svg { min-width: 560px; width: 100%; height: auto; display: block; }
-.uml text { font: 12px var(--font-code); fill: var(--text-primary); }
-.uml .t { font-family: var(--font-body); font-weight: 700; }
-.uml .box { fill: var(--bg-card); stroke: var(--text-primary); stroke-width: 1.4; }
-.uml .ln { stroke: var(--text-primary); fill: none; stroke-width: 1.4; }
-.legend { list-style: disc; padding-left: 1.2rem; margin-top: 0.8rem; font-size: 0.9rem; }
-.legend li { margin-top: 0.45rem; }
-
-/* Quizzes y navegación inferior */
-.qq { padding: 1rem 0; border-top: 1px solid var(--border-subtle); }
-.opts { display: grid; gap: 0.5rem; margin-top: 0.8rem; }
-.opt { 
-  text-align: left; 
-  background: var(--bg-inset); 
-  border: 2px solid transparent; 
-  border-radius: 8px; 
-  padding: 0.7rem 0.9rem; 
-  min-height: 44px; 
-  font-size: 0.92rem; 
-  cursor: pointer; 
+#pop[hidden] {
+  display: none;
 }
-.opt:hover { border-color: var(--accent); }
-.opt.ok { border-color: var(--creational); background: var(--tint-ok); }
-.opt.no { border-color: var(--warning); background: var(--tint-warn); }
-.fb { margin-top: 0.8rem; font-size: 0.9rem; min-height: 1.5em; }
 
-.nav-links { display: flex; justify-content: space-between; gap: 0.8rem; margin-top: 1.6rem; }
-.nav-links a { 
-  flex: 1; 
-  text-align: center; 
-  text-decoration: none; 
-  padding: 0.8rem 1rem; 
-  border: 1px solid var(--border-subtle); 
-  background: var(--bg-card); 
-  border-radius: 10px; 
-  font-weight: 700; 
-  color: var(--text-primary); 
+#pop b {
+  display: block;
+  font: 800 1.05rem var(--font-display);
+  margin-bottom: .25rem;
 }
-.nav-links a:hover { border-color: var(--accent); }
+
+#pop small {
+  display: block;
+  margin-top: .5rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+#pop .x {
+  position: absolute;
+  top: .2rem;
+  right: .3rem;
+  background: none;
+  border: 0;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 560px) {
+  #pop {
+    left: 1rem !important;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    top: auto !important;
+    width: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Diagramas UML
+   -------------------------------------------------------------------------- */
+.uml {
+  overflow-x: auto;
+  margin-top: .8rem;
+  background: var(--bg-inset);
+  border-radius: 8px;
+  padding: .5rem;
+}
+
+.uml svg {
+  min-width: 560px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.uml text {
+  font: 12px var(--font-code);
+  fill: var(--text-primary);
+}
+
+.uml .t {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+.uml .box {
+  fill: var(--bg-card);
+  stroke: var(--text-primary);
+  stroke-width: 1.4;
+}
+
+.uml .ln {
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 1.4;
+}
+
+.legend li {
+  margin-top: .45rem;
+  font-size: .9rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Autoevaluación (quiz)
+   -------------------------------------------------------------------------- */
+.qq {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.opts {
+  display: grid;
+  gap: .5rem;
+  margin-top: .8rem;
+}
+
+.opt {
+  text-align: left;
+  background: var(--bg-inset);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: .7rem .9rem;
+  min-height: 44px;
+  font-size: .92rem;
+}
+
+.opt:hover {
+  border-color: var(--accent);
+}
+
+.opt.ok {
+  border-color: var(--creational);
+  background: var(--tint-ok);
+}
+
+.opt.no {
+  border-color: var(--warning);
+  background: var(--tint-warn);
+}
+
+.fb {
+  margin-top: .8rem;
+  font-size: .9rem;
+  min-height: 1.5em;
+}
+
+/* --------------------------------------------------------------------------
+   9. Navegación entre fichas
+   -------------------------------------------------------------------------- */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  margin-top: 1.6rem;
+}
+
+.nav a,
+.nav .spacer {
+  flex: 1;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .8rem 1rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  border-radius: 10px;
+  font-weight: 700;
+  min-height: 48px;
+}
+
+.nav a:hover {
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   10. Accesibilidad: movimiento reducido
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

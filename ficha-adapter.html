@@ -2,18 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Adaptador (Adapter) — Ficha Técnica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Adaptador (Adapter) — Patrones GoF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700..900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Aplica el tema elegido ANTES de pintar la página, para evitar un parpadeo
+    // de colores. Es lo único que no puede esperar a script.js (que va con defer).
+    try { const t = localStorage.getItem('gof-tema'); if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="script.js" defer></script>
 </head>
-<body>
-  <div class="wrap">
+<body data-ficha="adapter">
+  <main class="wrap">
     <div class="top">
-      <a href="index.html" class="back">← Volver al índice</a>
-      <span class="brand">1 de 6</span>
+      <a class="back" href="index.html">← Volver al índice</a>
+      <div class="top-right">
+        <span class="brand">1 de 6</span>
+        <button class="theme-toggle" type="button" aria-label="Cambiar tema"><span aria-hidden="true">◐</span></button>
+      </div>
     </div>
 
-    <div style="--accent: var(--structural)">
+    <article class="cat-structural">
       <header class="head">
         <span class="tag">Estructural</span>
         <h1>Adaptador (Adapter)</h1>
@@ -22,120 +34,123 @@
 
       <section class="step bad">
         <h3>Contexto / Problema</h3>
-        <p>¿Cómo resolver interfaces incompatibles, o proporcionar una interfaz estable para componentes parecidos con diferentes interfaces? El problema aparece cuando tenemos un componente que ya existe y posee una funcionalidad que queremos utilizar, pero la interfaz mediante la cual ofrece esa funcionalidad no coincide con la que nuestro sistema espera utilizar.</p>
+        <p>¿Cómo resolver interfaces incompatibles, o proporcionar una interfaz estable para componentes parecidos con diferentes interfaces?</p>
       </section>
 
       <section class="step good">
         <h3>Solución</h3>
-        <p>Convierta la <button class="term" data-k="interfaz">interfaz</button> original de un componente en otra interfaz, mediante un objeto adaptador intermedio:</p>
-        <ul>
-          <li>Es un nivel de <button class="term" data-k="indir">indirección</button> que desacopla al <button class="term" data-k="cliente">cliente</button> de la clase externa.</li>
-          <li>Utiliza <button class="term" data-k="poli">polimorfismo</button> para intercambiar componentes mediante un contrato común.</li>
-          <li>Aporta <button class="term" data-k="vp">Variaciones Protegidas</button> frente a las APIs externas.</li>
-        </ul>
+        <p>Convierta la interfaz original de un componente en otra interfaz, mediante un objeto adaptador intermedio. Es un nivel de <button class="term" data-k="indir">indirección</button> con <button class="term" data-k="poli">polimorfismo</button> que da <button class="term" data-k="vp">Variaciones Protegidas</button> frente a las APIs externas.</p>
       </section>
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <ul>
-          <li><strong>NuevaEra (Larman):</strong> Debe soportar calculadores de impuestos, contabilidad y autorización de pagos externos, cada uno con su API. Se define <code>IAdaptadorCalculadorDeImpuestos</code> y adaptadores por servicio como <code>AdaptadorMasterEnImpuestos</code> y <code>AdaptadorImpuestosPro</code>.</li>
-          <li><strong>En la clase (Pedidos):</strong> Interfaz <code>IPago</code> con <code>MercadoPagoAdapter</code> y <code>PayPalAdapter</code> traduciendo las llamadas hacia sus respectivos SDKs.</li>
-        </ul>
+        <p>NuevaEra debe soportar calculadores de impuestos, contabilidad y autorización de pagos externos, cada uno con su API. Se define IAdaptadorCalculadorDeImpuestos y un adaptador por servicio (AdaptadorMasterEnImpuestos, AdaptadorImpuestosPro). En la clase: IPago con MercadoPagoAdapter y PayPalAdapter.</p>
       </section>
 
       <section class="step">
         <h3>Representación en UML</h3>
-        <div class="uml">
+        <div class="uml" role="img" aria-label="Diagrama de clases UML de Adaptador (Adapter)">
           <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1L11 6L1 11Z" class="box"/></marker>
-              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1L11 6L1 11" class="ln"/></marker>
+              <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto">
+                <path d="M1 1L11 6L1 11Z" class="box"/>
+              </marker>
+              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+                <path d="M1 1L11 6L1 11" class="ln"/>
+              </marker>
+              <marker id="dia" viewBox="0 0 14 10" refX="1" refY="5" markerWidth="14" markerHeight="10" orient="auto">
+                <path d="M1 5L7 1L13 5L7 9Z" class="box"/>
+              </marker>
             </defs>
-            <rect class="box" x="20" y="38" width="110" height="24"/><text class="t" x="75" y="54" text-anchor="middle">Client</text>
-            <rect class="box" x="230" y="20" width="200" height="48"/><text x="330" y="36" text-anchor="middle">«interface»</text><text class="t" x="330" y="50" text-anchor="middle">Target</text><line class="ln" x1="230" x2="430" y1="56" y2="56"/><text x="238" y="65">+ method(data)</text>
-            <rect class="box" x="230" y="140" width="200" height="54"/><text class="t" x="330" y="156" text-anchor="middle">Adapter</text><line class="ln" x1="230" x2="430" y1="162" y2="162"/><text x="238" y="174">- adaptee: Adaptee</text><text x="238" y="189">+ method(data)</text>
-            <rect class="box" x="490" y="148" width="140" height="42"/><text class="t" x="560" y="164" text-anchor="middle">Adaptee</text><line class="ln" x1="490" x2="630" y1="170" y2="170"/><text x="498" y="182">+ specificMethod()</text>
-            <line class="ln" x1="130" y1="50" x2="230" y2="50" marker-end="url(#arr)"/>
-            <line class="ln" x1="330" y1="140" x2="330" y2="68" stroke-dasharray="6 4" marker-end="url(#tri)"/>
-            <line class="ln" x1="430" y1="167" x2="490" y2="167" marker-end="url(#arr)"/>
+            <rect class="box" x="20" y="38" width="110" height="24"/>
+            <text class="t" x="75" y="54" text-anchor="middle" style="font-size:13px">Client</text>
+            <line class="ln" x1="20" x2="130" y1="60" y2="60"/>
+            <rect class="box" x="230" y="20" width="200" height="61"/>
+            <text x="330" y="36" text-anchor="middle">«interface»</text>
+            <text class="t" x="330" y="50" text-anchor="middle" style="font-size:13px">Target</text>
+            <line class="ln" x1="230" x2="430" y1="56" y2="56"/>
+            <text x="238" y="72">+ method(data)</text>
+            <rect class="box" x="230" y="140" width="200" height="62"/>
+            <text class="t" x="330" y="156" text-anchor="middle" style="font-size:13px">Adapter</text>
+            <line class="ln" x1="230" x2="430" y1="162" y2="162"/>
+            <text x="238" y="178">- adaptee: Adaptee</text>
+            <text x="238" y="193">+ method(data)</text>
+            <rect class="box" x="490" y="148" width="140" height="47"/>
+            <text class="t" x="560" y="164" text-anchor="middle" style="font-size:13px">Adaptee</text>
+            <line class="ln" x1="490" x2="630" y1="170" y2="170"/>
+            <text x="498" y="186">+ specificMethod()</text>
+            <line class="ln" x1="130" y1="50" x2="230" y2="50.5" marker-end="url(#arr)"/>
+            <line class="ln" x1="330" y1="140" x2="330" y2="81" stroke-dasharray="6 4" marker-end="url(#tri)"/>
+            <line class="ln" x1="430" y1="171" x2="490" y2="171.5" marker-end="url(#arr)"/>
           </svg>
         </div>
         <ul class="legend">
-          <li><b>Client:</b> usa la interfaz Target y no conoce al Adaptee.</li>
-          <li><b>Target «interface»:</b> el contrato que espera la aplicación.</li>
-          <li><b>Adapter:</b> implementa Target (realización) y traduce las llamadas.</li>
-          <li><b>Adaptee:</b> componente existente con otra interfaz. La asociación continua indica que el Adapter lo contiene y le delega.</li>
+          <li><b>Client</b>: usa la interfaz Target y no conoce al Adaptee.</li>
+          <li><b>Target</b> «interface»: el contrato que espera la aplicación.</li>
+          <li><b>Adapter</b>: implementa Target (realización: línea discontinua + triángulo hueco) y traduce las llamadas.</li>
+          <li><b>Adaptee</b>: componente existente con otra interfaz. La asociación continua indica que el Adapter lo contiene y le delega.</li>
         </ul>
       </section>
 
       <section class="step">
-        <h3>Discusión y Variantes</h3>
-        <ul>
-          <li><strong>Beneficios:</strong> El cliente usa una interfaz estable, se reutilizan componentes sin modificar el <button class="term" data-k="adaptee">Adaptee</button> y las diferencias quedan aisladas en el adaptador.</li>
-          <li><strong>Costo:</strong> Un objeto más (indirección adicional); si el adaptador acumula demasiada lógica, se debe revisar el diseño.</li>
-          <li><strong>Variantes:</strong> <em>Object Adapter</em> (composición, la más flexible en C#) y <em>Class Adapter</em> (herencia).</li>
-        </ul>
+        <h3>Discusión</h3>
+        <p>Beneficios: el cliente usa una interfaz estable, se reutilizan componentes sin modificar el [[adaptee]] y las diferencias quedan aisladas en el adaptador. Costo: un objeto más (indirección adicional); si el adaptador acumula mucha lógica, hay que revisar el uso del patrón. Variantes: Object Adapter (composición, la más flexible en C#) y Class Adapter (herencia).</p>
       </section>
 
       <section class="step">
         <h3>Patrones relacionados</h3>
-        <ul>
-          <li><strong>GRASP:</strong> Polimorfismo, Indirección, Variaciones Protegidas.</li>
-          <li><strong>GoF:</strong> Fachada (simplifica un subsistema; Adapter hace compatibles interfaces), Decorator, Proxy y Bridge. Un adaptador de recursos es una clase de Fachada, pero se llama adaptador por su énfasis en adaptar interfaces.</li>
-        </ul>
+        <p>GRASP: Polimorfismo, Indirección, Variaciones Protegidas. GoF: Fachada (simplifica un subsistema; Adapter hace compatibles interfaces), Decorator, Proxy y Bridge. Un adaptador de recursos es una clase de Fachada, pero se llama adaptador por su énfasis en adaptar interfaces.</p>
       </section>
 
       <section class="step">
         <h3>Ponete a prueba</h3>
-        <div class="qq">
+        <p class="fb" id="sc" aria-live="polite">0 de 4 respondidas</p>
+        <div class="qq" data-answer="1" data-explain="Es el Contexto/Problema del patrón.">
           <p><b>1.</b> Según Larman, ¿qué problema resuelve el Adaptador?</p>
           <div class="opts">
-            <button class="opt" data-correct="false" data-fb="Quién debe crear objetos corresponde a Factory.">Quién debe crear objetos con lógica compleja</button>
-            <button class="opt" data-correct="true" data-fb="Es el Contexto/Problema del patrón.">Interfaces incompatibles, o una interfaz estable para componentes parecidos</button>
-            <button class="opt" data-correct="false" data-fb="Corresponde al patrón Strategy.">Cómo diseñar algoritmos que cambien</button>
+            <button class="opt">Quién debe crear objetos con lógica compleja</button>
+            <button class="opt">Interfaces incompatibles, o una interfaz estable para componentes parecidos</button>
+            <button class="opt">Cómo diseñar algoritmos que cambien</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
-
-        <div class="qq">
+        <div class="qq" data-answer="2" data-explain="Larman lo presenta como una especialización de estos componentes básicos GRASP.">
           <p><b>2.</b> ¿En qué patrones GRASP se apoya el Adaptador?</p>
           <div class="opts">
-            <button class="opt" data-correct="false">Experto, Creador y Controlador</button>
-            <button class="opt" data-correct="true" data-fb="Larman lo presenta como una especialización de estos componentes básicos GRASP.">Polimorfismo, Indirección y Variaciones Protegidas</button>
-            <button class="opt" data-correct="false">Alta Cohesión únicamente</button>
+            <button class="opt">Experto, Creador y Controlador</button>
+            <button class="opt">Alta Cohesión únicamente</button>
+            <button class="opt">Polimorfismo, Indirección y Variaciones Protegidas</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
-
-        <div class="qq">
+        <div class="qq" data-answer="0" data-explain="Implementa Target y traduce las llamadas al Adaptee.">
           <p><b>3.</b> ¿Qué implementa el Adapter?</p>
           <div class="opts">
-            <button class="opt" data-correct="true" data-fb="Implementa Target y traduce las llamadas al Adaptee.">La interfaz Target que espera el cliente</button>
-            <button class="opt" data-correct="false">La interfaz interna del Adaptee</button>
-            <button class="opt" data-correct="false">Ninguna interfaz</button>
+            <button class="opt">La interfaz Target que espera el cliente</button>
+            <button class="opt">La interfaz interna del Adaptee</button>
+            <button class="opt">Ninguna interfaz</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
-
-        <div class="qq">
+        <div class="qq" data-answer="2" data-explain="Aumenta ligeramente la complejidad estructural.">
           <p><b>4.</b> ¿Cuál es el costo del patrón?</p>
           <div class="opts">
-            <button class="opt" data-correct="false">Impide reutilizar componentes</button>
-            <button class="opt" data-correct="false">Obliga a modificar el Adaptee</button>
-            <button class="opt" data-correct="true" data-fb="Aumenta ligeramente la complejidad estructural al introducir un objeto mediador.">Una indirección adicional: un objeto más</button>
+            <button class="opt">Impide reutilizar componentes</button>
+            <button class="opt">Obliga a modificar el Adaptee</button>
+            <button class="opt">Una indirección adicional: un objeto más</button>
           </div>
-          <p class="fb"></p>
+          <p class="fb" aria-live="polite"></p>
         </div>
       </section>
 
-      <div class="nav-links">
-        <span style="flex:1"></span>
+      <nav class="nav">
+        <span class="spacer"></span>
         <a href="ficha-factory.html">Factoría →</a>
-      </div>
-    </div>
-  </div>
+      </nav>
+    </article>
+  </main>
 
-  <div id="pop" role="dialog" hidden></div>
-  <script src="script.js"></script>
+  <!-- Popover de conceptos (lo maneja script.js) -->
+  <div id="pop" role="dialog" aria-live="polite" hidden></div>
 </body>
 </html>
