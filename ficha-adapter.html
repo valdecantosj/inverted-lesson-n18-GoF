@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha Técnica: Adapter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="nav-back">← Volver al Índice</a>
+
+    <header style="text-align: left; margin-bottom: 1.5rem;">
+      <span class="pill-tag tag-structural">Patrón Estructural GoF</span>
+      <h1 style="margin-top: 0.4rem;">Patrón Adaptador (Adapter)</h1>
+    </header>
+
+    <!-- Problema y Solución -->
+    <article class="ficha-box">
+      <h2 class="section-title">Problema Central</h2>
+      <p>¿Cómo resolver interfaces incompatibles o proporcionar una interfaz estable para componentes con interfaces diferentes sin modificar el código preexistente?</p>
+      
+      <h2 class="section-title" style="margin-top: 1rem;">Solución de Diseño</h2>
+      <p>Introducir un objeto intermedio (<strong>Adapter</strong>) que implementa la interfaz esperada por la aplicación (<strong>Target</strong>) y traduce las llamadas a los métodos del componente incompatible (<strong>Adaptee</strong>).</p>
+
+      <!-- Detalle interactivo sin JS -->
+      <details>
+        <summary>Ver Participantes Formales (UML)</summary>
+        <ul>
+          <li><strong>Client:</strong> Clase del dominio que requiere el servicio y colabora con Target.</li>
+          <li><strong>Target:</strong> Interfaz común que define el contrato del sistema interno.</li>
+          <li><strong>Adapter:</strong> Fabricación Pura que implementa Target y traduce la invocación.</li>
+          <li><strong>Adaptee:</strong> Componente externo con interfaz incompatible que hace el trabajo real.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Protocolo / Código representativo -->
+    <article class="ficha-box">
+      <h2 class="section-title">Mecánica de Traducción de Métodos</h2>
+      <div class="code-contract">
+// Target conocido por el sistema:
+public interface IPago {
+    ResultadoPago procesarPago(double monto);
+}
+
+// Adaptador traduciendo al Adaptee (MercadoPagoSDK):
+public class MercadoPagoAdapter : IPago {
+    private MercadoPagoSDK _sdk;
+
+    public ResultadoPago procesarPago(double monto) {
+        // Traduce sintaxis y nombres de operaciones
+        return _sdk.realizarTransaccion(monto);
+    }
+}
+      </div>
+
+      <!-- El debate técnico: El Voltaje -->
+      <div class="callout-box">
+        <div class="callout-title">⚠️ Precaución de Diseño: El Problema del "Voltaje"</div>
+        <p>Un adaptador hace compatibles las <strong>firmas de métodos (sintaxis)</strong>, pero no garantiza por sí solo la <strong>semántica</strong>. Si el sistema envía pesos y el servicio externo espera centavos, o si arroja excepciones de bajo nivel no normalizadas, el adaptador debe contener la lógica de conversión y manejo de fallos para evitar caídas catastróficas.</p>
+      </div>
+    </article>
+
+    <!-- Articulación con GRASP -->
+    <article class="ficha-box">
+      <h2 class="section-title">Fundamento GRASP</h2>
+      <p>El Adaptador materializa tres directivas esenciales de la Unidad 5:</p>
+      <ul style="margin-top: 0.5rem;">
+        <li><strong>Indirección:</strong> Introduce un objeto intermediario para evitar la dependencia directa.</li>
+        <li><strong>Polimorfismo:</strong> Permite intercambiar proveedores de servicio sin alterar el cliente.</li>
+        <li><strong>Variaciones Protegidas:</strong> Oculta la inestabilidad de las APIs de terceros detrás de una interfaz fija.</li>
+      </ul>
+    </article>
+  </div>
+</body>
+</html>
