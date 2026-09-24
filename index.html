@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patrones GoF — Fichas Técnicas Clase 18</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="header-badge">DSI — Cátedra de Diseño</span>
+      <h1>Patrones de Diseño GoF</h1>
+      <p class="subtitle">Guía de consulta interactiva para la Clase 18</p>
+    </header>
+
+    <main class="pattern-grid">
+      <!-- 1. Adapter -->
+      <a href="ficha-adapter.html" class="pattern-card" data-type="structural">
+        <div class="card-top">
+          <h2 class="card-title">1. Adaptador (Adapter)</h2>
+          <span class="pill-tag tag-structural">Estructural</span>
+        </div>
+        <p class="card-desc">Convierte la interfaz de un componente externo para hacerla compatible con la que espera la aplicación.</p>
+        <div class="card-meta">
+          <span>GRASP: Indirección</span> • <span>Variaciones Protegidas</span>
+        </div>
+      </a>
+
+      <!-- 2. Factory -->
+      <a href="ficha-factory.html" class="pattern-card" data-type="creational">
+        <div class="card-top">
+          <h2 class="card-title">2. Factoría (Factory)</h2>
+          <span class="pill-tag tag-creational">Creacional</span>
+        </div>
+        <p class="card-desc">Aísla y concentra la responsabilidad de instanciación con consideraciones o parametrizaciones complejas.</p>
+        <div class="card-meta">
+          <span>GRASP: Fabricación Pura</span> • <span>Alta Cohesión</span>
+        </div>
+      </a>
+
+      <!-- 3. Singleton -->
+      <a href="ficha-singleton.html" class="pattern-card" data-type="creational">
+        <div class="card-top">
+          <h2 class="card-title">3. Singleton</h2>
+          <span class="pill-tag tag-creational">Creacional</span>
+        </div>
+        <p class="card-desc">Garantiza una única instancia de una clase y provee un punto de acceso global y controlado.</p>
+        <div class="card-meta">
+          <span>Control de Instancia</span> • <span>Acceso Global</span>
+        </div>
+      </a>
+
+      <!-- 4. Facade -->
+      <a href="ficha-facade.html" class="pattern-card" data-type="structural">
+        <div class="card-top">
+          <h2 class="card-title">4. Fachada (Facade)</h2>
+          <span class="pill-tag tag-structural">Estructural</span>
+        </div>
+        <p class="card-desc">Ofrece una interfaz unificada y de alto nivel que simplifica el uso de un subsistema complejo.</p>
+        <div class="card-meta">
+          <span>Punto de Entrada</span> • <span>Bajo Acoplamiento</span>
+        </div>
+      </a>
+
+      <!-- 5. Strategy -->
+      <a href="ficha-strategy.html" class="pattern-card" data-type="behavioral">
+        <div class="card-top">
+          <h2 class="card-title">5. Estrategia (Strategy)</h2>
+          <span class="pill-tag tag-behavioral">Comportamiento</span>
+        </div>
+        <p class="card-desc">Encapsula familias de algoritmos y políticas variables haciéndolas intercambiables en tiempo de ejecución.</p>
+        <div class="card-meta">
+          <span>GRASP: Polimorfismo</span> • <span>Abierto/Cerrado</span>
+        </div>
+      </a>
+    </main>
+  </div>
+</body>
+</html>
