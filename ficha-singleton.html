@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Singleton — Ficha Técnica</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="index.html" class="back">← Volver al índice</a>
+      <span class="brand">3 de 6</span>
+    </div>
+
+    <div style="--accent: var(--creational)">
+      <header class="head">
+        <span class="tag">Creacional</span>
+        <h1>Singleton</h1>
+        <p class="analogy">¿Cómo garantizo una única instancia con acceso global?</p>
+      </header>
+
+      <section class="step bad">
+        <h3>Contexto / Problema</h3>
+        <p>Se admite exactamente una <button class="term" data-k="inst">instancia</button> de una clase —es un «singleton»—. Los objetos necesitan un único punto de <button class="term" data-k="global">acceso global</button>. El problema exige restringir la creación a una única instancia y proveer una vía accesible desde distintas partes.</p>
+      </section>
+
+      <section class="step good">
+        <h3>Solución</h3>
+        <p>Defina un método estático de la clase que devuelva el singleton (<code>getInstancia</code>):</p>
+        <ul>
+          <li>La primera vez crea la instancia; las siguientes únicamente la devuelven.</li>
+          <li>El constructor es de acceso restringido (-) para impedir que el código cliente cree instancias con <code>new</code>.</li>
+          <li>Centraliza el control de creación en la propia clase garantizando acceso compartido.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Ejemplo</h3>
+        <ul>
+          <li><strong>NuevaEra (Larman):</strong> Solo se necesita una <code>FactoriaDeServicios</code> y se la invoca desde varios lugares: <code>FactoriaDeServicios.getInstancia().getAdaptadorContabilidad()</code>. Pasarla como parámetro es posible, pero poco conveniente.</li>
+          <li><strong>En la clase (Pedidos):</strong> Se tiene una única <code>FactoriaDeServicios</code> utilizada para validar pedidos y procesar pagos en todo el sistema.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Representación en UML</h3>
+        <div class="uml">
+          <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1L11 6L1 11" class="ln"/></marker>
+            </defs>
+            <rect class="box" x="20" y="46" width="110" height="24"/><text class="t" x="75" y="62" text-anchor="middle">Client</text>
+            <rect class="box" x="230" y="20" width="270" height="69"/><text class="t" x="365" y="36" text-anchor="middle">Singleton</text><line class="ln" x1="230" x2="500" y1="42" y2="42"/><text x="238" y="54" text-decoration="underline">- instance: Singleton</text><text x="238" y="69">- Singleton()</text><text x="238" y="84" text-decoration="underline">+ getInstance(): Singleton</text>
+            <rect class="box" x="230" y="130" width="270" height="54" stroke-dasharray="4 3"/><text x="238" y="145">if (instance == null)</text><text x="238" y="160">  instance = new Singleton()</text><text x="238" y="175">return instance</text>
+            <line class="ln" x1="130" y1="58" x2="230" y2="58" marker-end="url(#arr)"/>
+            <line class="ln" x1="365" y1="130" x2="365" y2="89" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <ul class="legend">
+          <li><b>instance y getInstance()</b> subrayados: miembros estáticos (a nivel de clase).</li>
+          <li><b>Singleton():</b> constructor con acceso restringido (-), evitando que los clientes usen new.</li>
+          <li><b>Nota:</b> comprueba si instance es null; si no existe la crea, posteriormente devuelve siempre esa misma.</li>
+          <li><b>Client:</b> accede al Singleton únicamente mediante <code>getInstance()</code>.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Discusión y Concurrencia</h3>
+        <ul>
+          <li><strong>Multihilo:</strong> La <button class="term" data-k="lazy">inicialización perezosa (lazy)</button> representa una sección crítica y requiere sincronización para ser <button class="term" data-k="thread">thread-safe</button>. Larman la prefiere a la impaciente porque evita trabajo de creación si nunca se accede a ella.</li>
+          <li><strong>Instancia vs. Estático:</strong> Larman prefiere una instancia con métodos de instancia antes que métodos de clase estáticos, pues permite derivar subclases, implementar interfaces y habilitar polimorfismo.</li>
+          <li><strong>Costo:</strong> Introduce una dependencia global fuerte que debe estar justificada, puede ocultar problemas de diseño y complica las pruebas unitarias.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Patrones relacionados</h3>
+        <p>Factory y Fachada suelen accederse mediante Singleton. También Abstract Factory, Builder y Prototype pueden implementarse como Singleton.</p>
+      </section>
+
+      <section class="step">
+        <h3>Ponete a prueba</h3>
+        <div class="qq">
+          <p><b>1.</b> ¿Cuál es la solución que propone Larman para Singleton?</p>
+          <div class="opts">
+            <button class="opt" data-correct="true" data-fb="El método estático getInstancia entrega la única instancia.">Definir un método estático de la clase que devuelva el singleton</button>
+            <button class="opt" data-correct="false">Pasar la instancia como parámetro a todos los objetos</button>
+            <button class="opt" data-correct="false">Crear un objeto Fabricación Pura por cada cliente</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>2.</b> En una aplicación multihilo, ¿qué exige la inicialización perezosa?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Constructor público</button>
+            <button class="opt" data-correct="true" data-fb="La creación representa una sección crítica en concurrencia.">Control de concurrencia en la creación (thread-safe)</button>
+            <button class="opt" data-correct="false">Herencia múltiple</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>3.</b> ¿Por qué Larman prefiere la inicialización perezosa frente a la impaciente?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Es siempre más rápida</button>
+            <button class="opt" data-correct="false">No necesita método estático</button>
+            <button class="opt" data-correct="true" data-fb="Evita el trabajo y costo de inicialización si nunca se usa.">Evita el trabajo de creación si nunca se accede a la instancia</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>4.</b> ¿Por qué preferir métodos de instancia a métodos puramente estáticos en el singleton?</p>
+          <div class="opts">
+            <button class="opt" data-correct="true" data-fb="Los métodos estáticos no son polimórficos en la mayoría de los lenguajes.">Permiten definir subclases y son polimórficos</button>
+            <button class="opt" data-correct="false">Ahorran memoria de procesamiento</button>
+            <button class="opt" data-correct="false">Evitan declarar un constructor</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>5.</b> ¿Cuál es el costo del Singleton?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Requiere una clase más por cada cliente</button>
+            <button class="opt" data-correct="true" data-fb="Además puede ocultar dependencias cruzadas y complicar pruebas unitarias.">Una dependencia global fuerte que debe estar justificada</button>
+            <button class="opt" data-correct="false">Impide usar factorías</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+      </section>
+
+      <div class="nav-links">
+        <a href="ficha-factory.html">← Factoría</a>
+        <a href="ficha-facade.html">Fachada →</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="pop" role="dialog" hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>

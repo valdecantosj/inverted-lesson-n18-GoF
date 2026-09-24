@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Factoría (Factory) — Ficha Técnica</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="index.html" class="back">← Volver al índice</a>
+      <span class="brand">2 de 6</span>
+    </div>
+
+    <div style="--accent: var(--creational)">
+      <header class="head">
+        <span class="tag">Creacional</span>
+        <h1>Factoría (Factory)</h1>
+        <p class="analogy">¿Quién debe crear los objetos cuando la creación es compleja?</p>
+      </header>
+
+      <section class="step bad">
+        <h3>Contexto / Problema</h3>
+        <p>¿Quién debe ser el responsable de la creación de los objetos cuando existen consideraciones especiales, como una lógica de creación compleja, el deseo de separar las responsabilidades de la creación para mejorar la cohesión, etcétera? El problema aparece cuando una clase comienza a asumir responsabilidades de creación además de las propias.</p>
+      </section>
+
+      <section class="step good">
+        <h3>Solución</h3>
+        <p>Crear un objeto de <button class="term" data-k="fab">Fabricación Pura</button> denominado Factoría que maneje la creación:</p>
+        <ul>
+          <li>La factoría concentra la creación para que el cliente no requiera conocer la lógica necesaria para construirlo.</li>
+          <li>Aplica <button class="term" data-k="sepint">separación de intereses</button> y mantiene la <button class="term" data-k="coh">alta cohesión</button>.</li>
+          <li>Devuelve objetos tipificados bajo una <button class="term" data-k="interfaz">interfaz</button>, desacoplando al <button class="term" data-k="cliente">cliente</button> de implementaciones concretas.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Ejemplo</h3>
+        <ul>
+          <li><strong>NuevaEra (Larman):</strong> ¿Quién crea el adaptador? Si lo crea el Registro, sus responsabilidades exceden la lógica de la aplicación. La <code>FactoriaDeServicios</code> ofrece <code>getAdaptadorContabilidad()</code>, <code>getAdaptadorInventario()</code> y devuelve interfaces. El nombre de la clase se lee de una propiedad externa (diseño dirigido por datos parcial).</li>
+          <li><strong>En la clase (Pedidos):</strong> Se incorpora una <code>FactoriaDeServicios</code> que concentra la lógica de creación según el proveedor seleccionado (<code>factoria.getPago("ProveedorA")</code>).</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Representación en UML</h3>
+        <div class="uml">
+          <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1 1L11 6L1 11Z" class="box"/></marker>
+              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1L11 6L1 11" class="ln"/></marker>
+            </defs>
+            <rect class="box" x="20" y="38" width="100" height="24"/><text class="t" x="70" y="54" text-anchor="middle">Client</text>
+            <rect class="box" x="170" y="27" width="210" height="39"/><text class="t" x="275" y="43" text-anchor="middle">Factory</text><line class="ln" x1="170" x2="380" y1="49" y2="49"/><text x="178" y="59">+ crearProducto(): Product</text>
+            <rect class="box" x="460" y="20" width="170" height="48"/><text x="545" y="36" text-anchor="middle">«interface»</text><text class="t" x="545" y="50" text-anchor="middle">Product</text><line class="ln" x1="460" x2="630" y1="56" y2="56"/><text x="468" y="65">+ doStuff()</text>
+            <rect class="box" x="320" y="160" width="150" height="39"/><text class="t" x="395" y="176" text-anchor="middle">ConcreteProductA</text><line class="ln" x1="320" x2="470" y1="182" y2="182"/><text x="328" y="192">+ doStuff()</text>
+            <rect class="box" x="500" y="160" width="150" height="39"/><text class="t" x="575" y="176" text-anchor="middle">ConcreteProductB</text><line class="ln" x1="500" x2="650" y1="182" y2="182"/><text x="508" y="192">+ doStuff()</text>
+            <line class="ln" x1="120" y1="50" x2="170" y2="50" marker-end="url(#arr)"/>
+            <line class="ln" x1="380" y1="44" x2="460" y2="44" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+            <line class="ln" x1="395" y1="160" x2="545" y2="68" stroke-dasharray="6 4" marker-end="url(#tri)"/>
+            <line class="ln" x1="575" y1="160" x2="545" y2="68" stroke-dasharray="6 4" marker-end="url(#tri)"/>
+          </svg>
+        </div>
+        <ul class="legend">
+          <li><b>Client:</b> pide el objeto a la Factory (asociación) y solo conoce Product.</li>
+          <li><b>Factory:</b> Fabricación Pura que decide y crea. La dependencia discontinua indica que crea Product.</li>
+          <li><b>Product «interface»:</b> lo que la aplicación necesita usar.</li>
+          <li><b>ConcreteProduct A/B:</b> implementaciones (realización) que la Factoría instancia.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Discusión</h3>
+        <ul>
+          <li><strong>Ventajas (Larman):</strong> Separan la creación compleja en objetos de apoyo cohesivos, ocultan la lógica constructiva y permiten estrategias como caché o reciclaje de objetos.</li>
+          <li><strong>Costo:</strong> Una clase más y una <button class="term" data-k="indir">indirección</button> adicional. No conviene utilizarla solo porque "crear objetos con new está mal", sino cuando existen razones de diseño que justifiquen aislarla.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Patrones relacionados</h3>
+        <p>Singleton (a menudo se accede a las factorías con este patrón), Adapter (la Factoría decide qué adaptador crear), Fachada, Abstract Factory (familias de productos) y Strategy (la Factoría crea o selecciona la estrategia).</p>
+      </section>
+
+      <section class="step">
+        <h3>Ponete a prueba</h3>
+        <div class="qq">
+          <p><b>1.</b> ¿Qué pregunta responde el patrón Factoría?</p>
+          <div class="opts">
+            <button class="opt" data-correct="true" data-fb="Es su Contexto/Problema formal.">¿Quién debe ser responsable de la creación cuando hay consideraciones especiales?</button>
+            <button class="opt" data-correct="false">¿Cómo garantizar una sola instancia?</button>
+            <button class="opt" data-correct="false">¿Cómo tratar igual a un grupo y a un objeto atómico?</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>2.</b> ¿Qué tipo de objeto GRASP es la Factoría?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Experto en Información</button>
+            <button class="opt" data-correct="true" data-fb="Es una clase artificial creada para mantener alta cohesión y bajo acoplamiento.">Fabricación Pura</button>
+            <button class="opt" data-correct="false">Controlador</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>3.</b> ¿Qué principio ilustra sacar la creación de adaptadores del Registro?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Ley de Demeter</button>
+            <button class="opt" data-correct="false">Sustitución de Liskov</button>
+            <button class="opt" data-correct="true" data-fb="El dominio se ocupa del negocio y otro grupo de la conexión técnica con sistemas externos.">Separación de intereses</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>4.</b> ¿Qué ventaja menciona Larman de los objetos factoría?</p>
+          <div class="opts">
+            <button class="opt" data-correct="true" data-fb="También ocultan la lógica de creación potencialmente compleja.">Permiten estrategias como caché o reciclaje de objetos</button>
+            <button class="opt" data-correct="false">Eliminan la necesidad de interfaces</button>
+            <button class="opt" data-correct="false">Evitan la indirección</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+      </section>
+
+      <div class="nav-links">
+        <a href="ficha-adapter.html">← Adaptador</a>
+        <a href="ficha-singleton.html">Singleton →</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="pop" role="dialog" hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>

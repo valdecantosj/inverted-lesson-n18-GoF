@@ -2,79 +2,90 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patrones GoF — Fichas Técnicas Clase 18</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Patrones GoF — Fichas de estudio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <span class="header-badge">DSI — Cátedra de Diseño</span>
-      <h1>Patrones de Diseño GoF</h1>
-      <p class="subtitle">Guía de consulta interactiva para la Clase 18</p>
+  <div class="wrap">
+    <div class="top">
+      <span class="brand">DSI · Cátedra de Diseño · Clase 18</span>
+    </div>
+
+    <header class="hero">
+      <h1>Seis patrones, un problema cada uno</h1>
+      <p>Cada ficha empieza por el problema, después muestra la solución y termina con preguntas para que compruebes lo aprendido.</p>
     </header>
 
-    <main class="pattern-grid">
+    <p class="hint">Tip: en las fichas, tocá las palabras con subrayado punteado para ver su definición.</p>
+
+    <ul class="list">
       <!-- 1. Adapter -->
-      <a href="ficha-adapter.html" class="pattern-card" data-type="structural">
-        <div class="card-top">
-          <h2 class="card-title">1. Adaptador (Adapter)</h2>
-          <span class="pill-tag tag-structural">Estructural</span>
-        </div>
-        <p class="card-desc">Convierte la interfaz de un componente externo para hacerla compatible con la que espera la aplicación.</p>
-        <div class="card-meta">
-          <span>GRASP: Indirección</span> • <span>Variaciones Protegidas</span>
-        </div>
-      </a>
+      <li>
+        <a href="ficha-adapter.html" class="item" style="--accent: var(--structural)">
+          <div class="item-head">
+            <h2>Adaptador (Adapter)</h2>
+            <span class="tag">Estructural</span>
+          </div>
+          <p class="q">¿Cómo resolver interfaces incompatibles?</p>
+        </a>
+      </li>
 
       <!-- 2. Factory -->
-      <a href="ficha-factory.html" class="pattern-card" data-type="creational">
-        <div class="card-top">
-          <h2 class="card-title">2. Factoría (Factory)</h2>
-          <span class="pill-tag tag-creational">Creacional</span>
-        </div>
-        <p class="card-desc">Aísla y concentra la responsabilidad de instanciación con consideraciones o parametrizaciones complejas.</p>
-        <div class="card-meta">
-          <span>GRASP: Fabricación Pura</span> • <span>Alta Cohesión</span>
-        </div>
-      </a>
+      <li>
+        <a href="ficha-factory.html" class="item" style="--accent: var(--creational)">
+          <div class="item-head">
+            <h2>Factoría (Factory)</h2>
+            <span class="tag">Creacional</span>
+          </div>
+          <p class="q">¿Quién debe crear los objetos cuando la creación es compleja?</p>
+        </a>
+      </li>
 
       <!-- 3. Singleton -->
-      <a href="ficha-singleton.html" class="pattern-card" data-type="creational">
-        <div class="card-top">
-          <h2 class="card-title">3. Singleton</h2>
-          <span class="pill-tag tag-creational">Creacional</span>
-        </div>
-        <p class="card-desc">Garantiza una única instancia de una clase y provee un punto de acceso global y controlado.</p>
-        <div class="card-meta">
-          <span>Control de Instancia</span> • <span>Acceso Global</span>
-        </div>
-      </a>
+      <li>
+        <a href="ficha-singleton.html" class="item" style="--accent: var(--creational)">
+          <div class="item-head">
+            <h2>Singleton</h2>
+            <span class="tag">Creacional</span>
+          </div>
+          <p class="q">¿Cómo garantizo una única instancia con acceso global?</p>
+        </a>
+      </li>
 
       <!-- 4. Facade -->
-      <a href="ficha-facade.html" class="pattern-card" data-type="structural">
-        <div class="card-top">
-          <h2 class="card-title">4. Fachada (Facade)</h2>
-          <span class="pill-tag tag-structural">Estructural</span>
-        </div>
-        <p class="card-desc">Ofrece una interfaz unificada y de alto nivel que simplifica el uso de un subsistema complejo.</p>
-        <div class="card-meta">
-          <span>Punto de Entrada</span> • <span>Bajo Acoplamiento</span>
-        </div>
-      </a>
+      <li>
+        <a href="ficha-facade.html" class="item" style="--accent: var(--structural)">
+          <div class="item-head">
+            <h2>Fachada (Facade)</h2>
+            <span class="tag">Estructural</span>
+          </div>
+          <p class="q">¿Cómo ofrecer una interfaz unificada a un subsistema?</p>
+        </a>
+      </li>
 
       <!-- 5. Strategy -->
-      <a href="ficha-strategy.html" class="pattern-card" data-type="behavioral">
-        <div class="card-top">
-          <h2 class="card-title">5. Estrategia (Strategy)</h2>
-          <span class="pill-tag tag-behavioral">Comportamiento</span>
-        </div>
-        <p class="card-desc">Encapsula familias de algoritmos y políticas variables haciéndolas intercambiables en tiempo de ejecución.</p>
-        <div class="card-meta">
-          <span>GRASP: Polimorfismo</span> • <span>Abierto/Cerrado</span>
-        </div>
-      </a>
-    </main>
+      <li>
+        <a href="ficha-strategy.html" class="item" style="--accent: var(--behavioral)">
+          <div class="item-head">
+            <h2>Estrategia (Strategy)</h2>
+            <span class="tag">Comportamiento</span>
+          </div>
+          <p class="q">¿Cómo diseñar algoritmos o políticas que puedan cambiar?</p>
+        </a>
+      </li>
+
+      <!-- 6. Composite -->
+      <li>
+        <a href="ficha-composite.html" class="item" style="--accent: var(--structural)">
+          <div class="item-head">
+            <h2>Composite</h2>
+            <span class="tag">Estructural</span>
+          </div>
+          <p class="q">¿Cómo tratar igual a un grupo y a un objeto atómico?</p>
+        </a>
+      </li>
+    </ul>
   </div>
 </body>
 </html>

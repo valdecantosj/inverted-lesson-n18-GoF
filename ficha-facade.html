@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Fachada (Facade) — Ficha Técnica</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="index.html" class="back">← Volver al índice</a>
+      <span class="brand">4 de 6</span>
+    </div>
+
+    <div style="--accent: var(--structural)">
+      <header class="head">
+        <span class="tag">Estructural</span>
+        <h1>Fachada (Facade)</h1>
+        <p class="analogy">¿Cómo ofrecer una interfaz unificada a un subsistema?</p>
+      </header>
+
+      <section class="step bad">
+        <h3>Contexto / Problema</h3>
+        <p>Se requiere una <button class="term" data-k="interfaz">interfaz</button> común, unificada para un conjunto de implementaciones o interfaces dispares —como en un <button class="term" data-k="sub">subsistema</button>—. Si el cliente depende de muchos componentes internos, queda fuertemente acoplado a los detalles y los cambios internos pueden afectarlo.</p>
+      </section>
+
+      <section class="step good">
+        <h3>Solución</h3>
+        <p>Defina un único punto de conexión con el subsistema: un objeto fachada que lo envuelve:</p>
+        <ul>
+          <li>Presenta una única interfaz unificada y coordina las operaciones entre los componentes del subsistema.</li>
+          <li>Funciona como un front-end simplificado sin alterar las interfaces internas.</li>
+          <li>Brinda <button class="term" data-k="vp">Variaciones Protegidas</button>: el <button class="term" data-k="cliente">cliente</button> depende de la Fachada y no de las clases internas.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Ejemplo</h3>
+        <ul>
+          <li><strong>NuevaEra (Larman):</strong> Reglas de negocio conectables. La <code>Venta</code> llama a <code>FachadaMotorReglasPDV.getInstancia().esInvalido(ldv, this)</code> sin conocer cómo se evalúan internamente las reglas.</li>
+          <li><strong>En la clase (Pedidos):</strong> <code>PedidoFacade.procesarPedido(pedido)</code> coordina inventario, pago, transporte y notificaciones sin que el cliente conozca la maquinaria interna.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Representación en UML</h3>
+        <div class="uml">
+          <svg viewBox="0 0 680 235" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1L11 6L1 11" class="ln"/></marker>
+            </defs>
+            <rect class="box" x="20" y="39" width="100" height="24"/><text class="t" x="70" y="55" text-anchor="middle">Client</text>
+            <rect class="box" x="190" y="20" width="220" height="39"/><text class="t" x="300" y="36" text-anchor="middle">Facade</text><line class="ln" x1="190" x2="410" y1="42" y2="42"/><text x="198" y="52">+ operacionSimple()</text>
+            <rect class="box" x="50" y="170" width="150" height="39"/><text class="t" x="125" y="186" text-anchor="middle">ClaseA</text><line class="ln" x1="50" x2="200" y1="192" y2="192"/><text x="58" y="202">+ operacionA()</text>
+            <rect class="box" x="235" y="170" width="150" height="39"/><text class="t" x="310" y="186" text-anchor="middle">ClaseB</text><line class="ln" x1="235" x2="385" y1="192" y2="192"/><text x="243" y="202">+ operacionB()</text>
+            <rect class="box" x="420" y="170" width="150" height="39"/><text class="t" x="495" y="186" text-anchor="middle">ClaseC</text><line class="ln" x1="420" x2="570" y1="192" y2="192"/><text x="428" y="202">+ operacionC()</text>
+            <line class="ln" x1="120" y1="51" x2="190" y2="51" marker-end="url(#arr)"/>
+            <line class="ln" x1="300" y1="59" x2="125" y2="170" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+            <line class="ln" x1="300" y1="59" x2="310" y2="170" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+            <line class="ln" x1="300" y1="59" x2="495" y2="170" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+          </svg>
+        </div>
+        <ul class="legend">
+          <li><b>Client:</b> solo se relaciona con la Facade, el punto de acceso al subsistema.</li>
+          <li><b>Facade:</b> coordina varias operaciones del subsistema para completar una solicitud.</li>
+          <li><b>Clases del subsistema:</b> contienen la funcionalidad real y permanecen ocultas (dependencias discontinuas).</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Discusión</h3>
+        <ul>
+          <li><strong>Ocultamiento:</strong> Reduce las dependencias directas del cliente con los componentes internos y facilita cambios internos sin afectar al cliente (separación de intereses).</li>
+          <li><strong>Costo:</strong> Introduce una <button class="term" data-k="indir">indirección</button> adicional. Si la Fachada concentra demasiadas responsabilidades, corre el riesgo de volverse excesivamente compleja.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Patrones relacionados</h3>
+        <ul>
+          <li><strong>Singleton:</strong> normalmente se accede a las fachadas mediante Singleton cuando se requiere un punto compartido.</li>
+          <li><strong>Adapter vs. Facade:</strong> Fachada proporciona una interfaz simplificada para un subsistema; Adapter adapta interfaces incompatibles existentes.</li>
+          <li><strong>Composite:</strong> Fachada simplifica el acceso; Composite permite tratar de forma uniforme objetos individuales y compuestos.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3>Ponete a prueba</h3>
+        <div class="qq">
+          <p><b>1.</b> ¿Cuál es la solución de la Fachada según Larman?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Convertir una interfaz en otra con un adaptador</button>
+            <button class="opt" data-correct="true" data-fb="La Fachada actúa como el front-end envolvente del subsistema.">Un único punto de conexión con el subsistema: un objeto fachada que lo envuelve</button>
+            <button class="opt" data-correct="false">Una interfaz común para objetos atómicos y compuestos</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>2.</b> ¿Qué ofrece la Fachada frente a los cambios del subsistema?</p>
+          <div class="opts">
+            <button class="opt" data-correct="true" data-fb="Los clientes dependen de la Fachada y quedan protegidos de cambios internos.">Variaciones Protegidas</button>
+            <button class="opt" data-correct="false">Una única instancia garantizada</button>
+            <button class="opt" data-correct="false">Eliminación total del acoplamiento</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>3.</b> ¿Cómo se accede normalmente a una Fachada?</p>
+          <div class="opts">
+            <button class="opt" data-correct="false">Creándola con new en cada uso</button>
+            <button class="opt" data-correct="false">Mediante herencia</button>
+            <button class="opt" data-correct="true" data-fb="Los dos aportan una indirección que mantiene bajo acoplamiento.">Mediante el patrón Singleton</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+
+        <div class="qq">
+          <p><b>4.</b> ¿Qué significa «subsistema» en este contexto?</p>
+          <div class="opts">
+            <button class="opt" data-correct="true" data-fb="Se emplea en sentido informal para denotar un grupo de componentes relacionados.">Un grupo de componentes relacionados, en sentido informal</button>
+            <button class="opt" data-correct="false">Una base de datos relacional</button>
+            <button class="opt" data-correct="false">Un patrón GRASP</button>
+          </div>
+          <p class="fb"></p>
+        </div>
+      </section>
+
+      <div class="nav-links">
+        <a href="ficha-singleton.html">← Singleton</a>
+        <a href="ficha-strategy.html">Estrategia →</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="pop" role="dialog" hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>
