@@ -39,12 +39,15 @@
 
       <section class="step good">
         <h3>Solución</h3>
-        <p>Convierta la interfaz original de un componente en otra interfaz, mediante un objeto adaptador intermedio. Es un nivel de <button class="term" data-k="indir">indirección</button> con <button class="term" data-k="poli">polimorfismo</button> que da <button class="term" data-k="vp">Variaciones Protegidas</button> frente a las APIs externas.</p>
+        <p>Convierta la interfaz original de un componente en otra interfaz, mediante un objeto adaptador intermedio (entre el Target y el <button class="term" data-k="adaptee">Adaptee</button>).</p>
+		<p>Es un nivel de <button class="term" data-k="indir">indirección</button> con <button class="term" data-k="poli">polimorfismo</button> que da <button class="term" data-k="vp">Variaciones Protegidas</button> frente a las APIs externas.</p>
       </section>
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <p>NuevaEra debe soportar calculadores de impuestos, contabilidad y autorización de pagos externos, cada uno con su API. Se define IAdaptadorCalculadorDeImpuestos y un adaptador por servicio (AdaptadorMasterEnImpuestos, AdaptadorImpuestosPro). En la clase: IPago con MercadoPagoAdapter y PayPalAdapter.</p>
+        <p>Nuestro sistema de pedidos (cliente) tiene que permitirnos procesar el pago de los mismos mediante dos métodos de pago conocidos (Mercado Pago y PayPal) cada uno con su API de proovedores externos, con sus respectivas interfaces (todas diferentes).</p>
+		<p>El cliente no conoce la interfaz incompatible de los SDK de dichas empresas. Solo sabe de una interfaz IPago con el contrato polimórfico procesarPago(monto), y los adaptadores concretos (mercadoPagoAdapter, y PayPalAdapter) implementan esa interfaz y traducen la peticion a cada Adaptee.</p>
+		<p>Entonces el sistema no va a tener problema en procesar el pago ya que el adaptador le permite comunicarse con los componentes externos. Vea el diagrama UML dado en la presentacion.</p>
       </section>
 
       <section class="step">
@@ -88,18 +91,23 @@
           <li><b>Client</b>: usa la interfaz Target y no conoce al Adaptee.</li>
           <li><b>Target</b> «interface»: el contrato que espera la aplicación.</li>
           <li><b>Adapter</b>: implementa Target (realización: línea discontinua + triángulo hueco) y traduce las llamadas.</li>
-          <li><b>Adaptee</b>: componente existente con otra interfaz. La asociación continua indica que el Adapter lo contiene y le delega.</li>
+          <li><b>Adaptee (adaptado)</b>: componente existente con otra interfaz. La asociación continua indica que el Adapter lo contiene y le delega.</li>
         </ul>
       </section>
 
       <section class="step">
         <h3>Discusión</h3>
-        <p>Beneficios: el cliente usa una interfaz estable, se reutilizan componentes sin modificar el [[adaptee]] y las diferencias quedan aisladas en el adaptador. Costo: un objeto más (indirección adicional); si el adaptador acumula mucha lógica, hay que revisar el uso del patrón. Variantes: Object Adapter (composición, la más flexible en C#) y Class Adapter (herencia).</p>
+		<p>Beneficios:</p>
+		<p>El cliente usa una interfaz estable, se reutilizan componentes sin modificar el Adaptee y las diferencias quedan aisladas en el adaptador.</p>
+		<p>Costo: un objeto más (indirección adicional); si el adaptador acumula mucha lógica, hay que revisar el uso del patrón.</p>
+		<p>Variantes: Object Adapter (mediante referencia al objeto) y Class Adapter (usa herencia).</p>
       </section>
 
       <section class="step">
         <h3>Patrones relacionados</h3>
-        <p>GRASP: Polimorfismo, Indirección, Variaciones Protegidas. GoF: Fachada (simplifica un subsistema; Adapter hace compatibles interfaces), Decorator, Proxy y Bridge. Un adaptador de recursos es una clase de Fachada, pero se llama adaptador por su énfasis en adaptar interfaces.</p>
+        <p>GRASP: Polimorfismo, Indirección, Variaciones Protegidas.</p>
+		<p>GoF: Fachada (simplifica un subsistema; Adapter hace compatibles interfaces), Decorator, Proxy y Bridge.</p>
+		<p>Un adaptador de recursos es una clase de Fachada, pero se llama adaptador por su énfasis en adaptar interfaces.</p>
       </section>
 
       <section class="step">

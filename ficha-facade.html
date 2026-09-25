@@ -39,12 +39,12 @@
 
       <section class="step good">
         <h3>Solución</h3>
-        <p>Defina un único punto de conexión con el subsistema —un objeto fachada que lo envuelve—. Presenta una única interfaz unificada y es responsable de colaborar con sus componentes. Es un objeto front-end que da <button class="term" data-k="vp">Variaciones Protegidas</button>.</p>
+        <p>Defina un único punto de conexión con el subsistema —un objeto fachada que lo envuelve—. Presenta una única interfaz unificada y es responsable de colaborar con sus componentes. Es un objeto front-end que da <button class="term" data-k="vp">Variaciones Protegidas</button>. Lo importante no es modificar las interfaces de los componentes internos, sino ocultar su complejidad detrás de una interfaz más sencilla.</p>
       </section>
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <p>NuevaEra: reglas de negocio conectables. La Venta llama a FachadaMotorReglasPDV.getInstancia().esInvalido(ldv, this) sin conocer cómo se evalúan las reglas. En la clase: PedidoFacade.procesarPedido() coordina inventario, pago, envío y notificaciones.</p>
+        <p>Se puede armar una fachada que da un único punto de acceso a cada uno de los Servicios que ofrece (PedidoFacade con flechas discontinuas a ServicioPago, ServicioInventario, ServicioEnvio, etc.), sin conocer como se evalúan las reglas, solo coordina.</p>
       </section>
 
       <section class="step">

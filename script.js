@@ -30,7 +30,7 @@
     oc:        ['Abierto/Cerrado', 'Se puede agregar comportamiento nuevo sin modificar el código que ya funciona.', ''],
     inst:      ['Instanciar', 'Crear un objeto concreto a partir de una clase (con new).', ''],
     sub:       ['Subsistema', 'Grupo de clases que colaboran para una tarea y que el cliente no debería conocer una por una.', ''],
-    algo:      ['Algoritmo / política', 'Una forma concreta de resolver algo, por ejemplo calcular un descuento o un recargo.', ''],
+    algo:      ['Algoritmo', 'Una forma concreta de resolver algo, por ejemplo calcular un descuento o un recargo.', ''],
     global:    ['Acceso global', 'Poder llegar a un objeto desde cualquier parte sin pasarlo por parámetro. Cómodo, pero esconde dependencias.', 'Es la crítica más común a Singleton.'],
     thread:    ['Thread-safe', 'Funciona bien aunque varios hilos lo usen a la vez, sin crear dos instancias ni corromper datos.', ''],
     hoja:      ['Hoja', 'Elemento sin hijos, como un archivo dentro de una carpeta.', ''],
@@ -38,7 +38,7 @@
     rec:       ['Recursión', 'Una operación que se llama a sí misma sobre los hijos. Así un compuesto delega el trabajo en toda su estructura.', ''],
     adaptee:   ['Adaptee', 'Componente que ya tiene la funcionalidad que necesitamos, pero con una interfaz distinta a la que espera el cliente. No necesariamente lo diseñamos nosotros.', ''],
     sepint:    ['Separación de intereses', 'Dividir en módulos o áreas distintas los intereses diferentes, de modo que cada una tenga un propósito cohesivo (separation of concerns).', ''],
-    lazy:      ['Inicialización perezosa (lazy)', 'La instancia se crea la primera vez que se pide, no antes. Requiere control de concurrencia si hay varios hilos.', 'La alternativa es la inicialización impaciente (eager).'],
+    lazy:      ['Carga perezosa (lazy loading)', 'La instancia se crea la primera vez que se pide, no antes. Requiere control de concurrencia si hay varios hilos.', 'La alternativa es la carga impaciente (eager loading). Esto usamos en DSW.'],
     ctx:       ['Objeto de contexto', 'El objeto al que se aplica el algoritmo. Guarda su estrategia (visibilidad de atributo) y le delega parte del trabajo.', '']
   };
 
