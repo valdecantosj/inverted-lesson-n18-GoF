@@ -35,6 +35,7 @@
       <section class="step bad">
         <h3>Contexto / Problema</h3>
         <p>¿Cómo diseñar diversos algoritmos o políticas que están relacionadas? ¿Cómo diseñar que estos algoritmos o políticas puedan cambiar?</p>
+		<p>El problema aparece cuando un objeto necesita realizar una determinada operación, pero la forma de realizarla puede variar.</p>
       </section>
 
       <section class="step good">
@@ -44,7 +45,7 @@
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <p>En NuevaEra la fijación de precios varía: EstrategiaFijarPreciosPorcentajeDescuento, EstrategiaFijarPreciosDescuentoAbsolutoSobreUmbral, etc. La Venta (contexto) guarda una IEstrategiaFijarPreciosVenta y su getTotal() hace estrategiaFijarPrecios.getTotal(this). En la clase: Pedido con EstrategiaPrecio.</p>
+        <p>En el sistema de pedidos, se define un objeto de contexto para los pedidos que mantiene una referencia a una Estrategia y delega en ella el comportamiento que puede variar en las concretas (PrecioNormal, DescuentoPorcentaje, DescuentoClienteFrecuente).</p>
       </section>
 
       <section class="step">
@@ -100,7 +101,8 @@
 
       <section class="step">
         <h3>Discusión</h3>
-        <p>Beneficios: se separan los algoritmos del objeto que los usa, se cambia la estrategia sin modificar el contexto y se agregan nuevas con nuevas clases (<button class="term" data-k="oc">abierto/cerrado</button>). Costo: clases y objetos adicionales, y alguien debe seleccionar y configurar la estrategia. El contexto suele pasarse a sí mismo (this) para dar visibilidad de parámetro a la estrategia.</p>
+        <p>Beneficios: se separan los algoritmos del objeto que los usa, se cambia la estrategia sin modificar el contexto y se agregan nuevas con nuevas clases (<button class="term" data-k="oc">abierto/cerrado</button>). Permite cambiar la politica de precios en tiempo de ejecución sin alterar la clase pedido.</p>
+		<p>Costo: clases y objetos adicionales, y alguien debe seleccionar y configurar la estrategia. El contexto suele pasarse a sí mismo (this) para dar visibilidad de parámetro a la estrategia.</p>
       </section>
 
       <section class="step">

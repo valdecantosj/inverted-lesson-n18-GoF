@@ -34,7 +34,8 @@
 
       <section class="step bad">
         <h3>Contexto / Problema</h3>
-        <p>Se admite exactamente una instancia de una clase —es un «singleton»—. Los objetos necesitan un único punto de acceso global.</p>
+        <p>¿Qué pasa cuando sólo necesitamos una instancia de una clase en todo el proceso y distintos lugares del sistema necesitan acceder a ella? El problema tiene dos partes:</p>
+		<p>Se admite exactamente una instancia de una clase —es un «single-ton»—. Y Los objetos necesitan un único punto de acceso global.</p>
       </section>
 
       <section class="step good">
@@ -44,7 +45,10 @@
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <p>En NuevaEra solo se necesita una FactoriaDeServicios y se la invoca desde varios lugares: FactoriaDeServicios.getInstancia().getAdaptadorContabilidad(). Pasarla como parámetro es posible, pero poco conveniente.</p>
+        <p>En el mismo sistema solo se necesita UNA ÚNICA INSTANCIA de FactoriaDeServicios y que se la invoque desde varios lugares.</p>
+		<p>Cuando se necesita usar el singleton, no crea directamente un objeto con new. En cambio, solicita la instancia mediante el método de acceso, por ejemplo, FactoriaDeServicios.getInstancia(); la primera vez se crea, las siguientes únicamente la devuelven.</p>
+		<p>Singleton = una sola instancia + acceso común a esa instancia. -> está diseñada para impedir que el resto del sistema cree otras instancias directamente.</p>
+</p>
       </section>
 
       <section class="step">
@@ -80,16 +84,18 @@
           </svg>
         </div>
         <ul class="legend">
-          <li><b>instance</b> y <b>getInstance()</b> subrayados: miembros estáticos (a nivel de clase).</li>
-          <li><b>Singleton()</b> con acceso restringido (-): el cliente no puede usar new.</li>
-          <li><b>Nota</b>: si instance es null la crea; luego devuelve siempre la misma.</li>
+          <li><b>instance</b> y <b>getInstance()</b> subrayados: miembros estáticos (a nivel de clase). Almacena la única instancia de la clase y permite obtener la misma, respectivamente.</li>
+          <li><b>Singleton()</b> con acceso restringido (-): el cliente no puede usar new. (Private)</li>
+          <li>Si instance es null la crea; luego devuelve siempre la misma.</li>
           <li><b>Client</b>: accede al singleton solo mediante getInstance().</li>
         </ul>
       </section>
 
       <section class="step">
         <h3>Discusión</h3>
-        <p>Con varios hilos, la <button class="term" data-k="lazy">inicialización perezosa</button> es una sección crítica: se sincroniza el método (<button class="term" data-k="thread">thread-safe</button>). Larman la prefiere a la impaciente porque evita crear la instancia si nunca se usa. También prefiere una instancia con métodos de instancia antes que métodos estáticos, porque permiten subclases y polimorfismo. Costo: dependencia global fuerte que debe justificarse; dificulta las pruebas unitarias.</p>
+        <p>Con varios hilos, la <button class="term" data-k="lazy">carga perezosa</button> es una sección crítica: se sincroniza el método (<button class="term" data-k="thread">thread-safe</button>). Larman la prefiere a la impaciente porque evita crear la instancia si nunca se usa. También prefiere una instancia con métodos de instancia antes que métodos estáticos, porque permiten subclases y polimorfismo.</p>
+		<p>Con esto se garantiza que exista una única instancia de una clase cuando el diseño requiere que todos los clientes trabajen con el mismo objeto, proporcionando además un punto de acceso a esa instancia. Conseguimos evitar la creación de múltiples instancias; compartir una única instancia entre diferentes partes del sistema; centralizar el acceso a esa instancia; controlar su creación desde la propia clase.</p>
+		<p>Costo: dependencia global fuerte que debe justificarse; dificulta las pruebas unitarias.</p>
       </section>
 
       <section class="step">

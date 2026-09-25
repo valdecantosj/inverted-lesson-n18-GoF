@@ -34,17 +34,20 @@
 
       <section class="step bad">
         <h3>Contexto / Problema</h3>
-        <p>¿Quién debe ser el responsable de la creación de los objetos cuando existen consideraciones especiales, como una lógica de creación compleja, el deseo de separar las responsabilidades de la creación para mejorar la cohesión, etcétera?</p>
+        <p>¿Quién debe ser el responsable de la creación de los objetos cuando existen consideraciones especiales, como una lógica de creación compleja, el deseo de separar las responsabilidades de la creación para mejorar la cohesión?</p>
+		<p>El problema aparece cuando una clase asume responsabilidades relacionadas con la creación, además de sus propias responsabilidades. Y al no ser una responsabilidad sencilla, conviene separar la creación por la existencia de decisiones, lógica o configuraciones.</p>
       </section>
 
       <section class="step good">
         <h3>Solución</h3>
-        <p>Crear un objeto <button class="term" data-k="fab">Fabricación Pura</button> denominado Factoría que maneje la creación. Aplica <button class="term" data-k="sepint">separación de intereses</button> y <button class="term" data-k="coh">alta cohesión</button>.</p>
+        <p>Crear un objeto <button class="term" data-k="fab">Fabricación Pura</button> denominado Factoría que maneje la creación. La factoria concentra la responsabilidad de creación, de esta manera, el cliente solicita un objeto, pero no necesita encargarse de toda la lógica necesaria para decidir cómo construirlo.</p>
+		<p>En pocas palabras, Factory = encapsular la creación de objetos.</p>
+		<p>Aplica <button class="term" data-k="sepint">separación de intereses</button> y <button class="term" data-k="coh">alta cohesión</button>.</p>
       </section>
 
       <section class="step">
         <h3>Ejemplo</h3>
-        <p>En NuevaEra, ¿quién crea el adaptador? Si lo crea el Registro, sus responsabilidades exceden la lógica de la aplicación. La FactoriaDeServicios ofrece getAdaptadorContabilidad(), getAdaptadorInventario()... y devuelve el tipo de la interfaz, no de la clase. El nombre de la clase se lee de una propiedad externa (diseño dirigido por los datos parcial).</p>
+        <p>Continuando el ejemplo de el sistema de pedidos. ¿Quién crea el adaptador?, si lo creara el Cliente, las responsabilidades exceden la logica de la aplicación, por lo tanto, es preferible que se agregue entre el cliente y lo que era el target la FactoriaDeServicios, el cual ofrece crearPago() y devuelve el tipo de la interfaz, no de la clase.</p>
       </section>
 
       <section class="step">
@@ -98,12 +101,19 @@
 
       <section class="step">
         <h3>Discusión</h3>
-        <p>Ventajas (Larman): separan la creación compleja en objetos de apoyo cohesivos, ocultan la lógica de creación y permiten estrategias de memoria como caché o reciclaje. Costo: una clase más y una indirección. No conviene usarla solo porque «crear objetos está mal».</p>
+        <p>Ventajas (Larman):</p>
+		<p>Separan la creación compleja en objetos de apoyo cohesivos. Aísla la lógica de creación. El cliente no necesita conocer las clases concretas instanciadas.</p>
+		<p>Ocultan la lógica de creación y permiten estrategias de memoria como caché o reciclaje.</p>
+		<p>Costo: una clase más y una indirección. No conviene usarla solo porque «crear objetos está mal».</p>
       </section>
 
       <section class="step">
         <h3>Patrones relacionados</h3>
-        <p>Singleton (a menudo se accede a las factorías con este patrón), Adapter (la Factoría decide qué adaptador crear), Fachada, Abstract Factory (familias de productos) y Strategy (la Factoría crea o selecciona la estrategia).</p>
+        <p>Singleton (a menudo se accede a las factorías con este patrón).</p>
+		<p>Adapter (la Factoría decide qué adaptador crear).</p>
+		<p>Fachada.</p>
+		<p>Abstract Factory (familias de productos).</p>
+		<p>Strategy (la Factoría crea o selecciona la estrategia).</p>
       </section>
 
       <section class="step">
